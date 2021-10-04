@@ -4,16 +4,28 @@ class ContaCorrente {
   late Cliente titular;
   int agencia = 145;
   late int conta;
-  double saldo = 20.0;
+  double _saldo = 20.0;
   double chequeEspecial = -100.0;
 
+  void definirSaldo(double novoSaldo) {
+    if (novoSaldo <= chequeEspecial) {
+      this._saldo = novoSaldo;
+    } else {
+      print('Erro! Saldo menor que o cheque especial.');
+    }
+  }
+
+  double obterSaldo() {
+    return this._saldo;
+  }
+
   bool verificaSaldo(double valor) {
-    if (this.saldo - valor < chequeEspecial) {
+    if (this._saldo - valor < chequeEspecial) {
       print('Saldo insuficiente! :c');
       return false;
     } else {
       print('Movimentando R\$ $valor.');
-      this.saldo -= valor;
+      this._saldo -= valor;
       return true;
     }
   }
@@ -32,13 +44,13 @@ class ContaCorrente {
       return false;
     } else {
       print('Sacando R\$ $valorDoSaque.');
-      this.saldo -= valorDoSaque;
+      this._saldo -= valorDoSaque;
       return true;
     }
   }
 
   double deposito(double valorDoDeposito) {
-    this.saldo += valorDoDeposito;
-    return this.saldo;
+    this._saldo += valorDoDeposito;
+    return this._saldo;
   }
 }
