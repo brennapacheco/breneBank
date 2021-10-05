@@ -2,30 +2,32 @@ import 'cliente.dart';
 
 class ContaCorrente {
   late Cliente titular;
-  int agencia = 145;
+  int _agencia = 145;
+  int get agencia => _agencia;
+  set agencia(int novaAgencia) { _agencia = novaAgencia; }
   late int conta;
   double _saldo = 20.0;
   double chequeEspecial = -100.0;
 
-  void definirSaldo(double novoSaldo) {
-    if (novoSaldo <= chequeEspecial) {
-      this._saldo = novoSaldo;
+  double get saldo {
+    return _saldo;
+  }
+
+  set saldo(double novoSaldo) {
+    if (novoSaldo >= chequeEspecial) {
+      _saldo = novoSaldo;
     } else {
-      print('Erro! Saldo menor que o cheque especial.');
+      print('Erro! Saldo maior que o cheque especial.');
     }
   }
 
-  double obterSaldo() {
-    return this._saldo;
-  }
-
   bool verificaSaldo(double valor) {
-    if (this._saldo - valor < chequeEspecial) {
+    if (saldo - valor < chequeEspecial) {
       print('Saldo insuficiente! :c');
       return false;
     } else {
       print('Movimentando R\$ $valor.');
-      this._saldo -= valor;
+      saldo -= valor;
       return true;
     }
   }
@@ -44,13 +46,13 @@ class ContaCorrente {
       return false;
     } else {
       print('Sacando R\$ $valorDoSaque.');
-      this._saldo -= valorDoSaque;
+      saldo -= valorDoSaque;
       return true;
     }
   }
 
   double deposito(double valorDoDeposito) {
-    this._saldo += valorDoDeposito;
-    return this._saldo;
+    saldo += valorDoDeposito;
+    return saldo;
   }
 }
